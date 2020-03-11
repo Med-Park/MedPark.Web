@@ -1,0 +1,350 @@
+﻿@page
+@model MedPark.Web.Pages.Specialist.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<section class="page-section" id="customer-profile">
+    <div class="container">
+        <div class="row m-4">
+            <div class="col-lg-12 text-center">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="@Model.SpecialistDetails.Avatar" alt="">
+                    <h4>@Model.SpecialistDetails.FirstName @Model.SpecialistDetails.Surname</h4>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <ul class="nav nav-pills" id="myTab" role="tablist">
+                    <li class="nav-item col-sm-3 pl-0 text-center">
+                        <a class="nav-link shadow" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    </li>
+                    <li class="nav-item col-sm-3 text-center">
+                        <a class="nav-link shadow" id="calendar-tab" data-toggle="pill" href="#calendar" role="tab" aria-controls="calendar" aria-selected="false">Calendar</a>
+                    </li>
+                    <li class="nav-item col-sm-3 text-center">
+                        <a class="nav-link shadow" id="orders-tab" data-toggle="pill" href="#orders" role="tab" aria-controls="orders" aria-selected="false">Orders</a>
+                    </li>
+                    <li class="nav-item col-sm-3 pr-0 text-center">
+                        <a class="nav-link shadow" id="contact-tab" data-toggle="pill" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>
+                </ul>
+                <div class="tab-content shadow" id="myTabContent">
+                    <form id="customer-details-form">
+                        <!-- DEAILS TAB -->
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <h5 class="modal-title details-dividerd mb-3 text-center">Specialist Details</h5>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control form-control-md border shadow-sm " data-val="true" id="Title" name="Title" placeholder="Title" type="text" value="@Model.SpecialistDetails.Title" data-bv-notempty="true" data-bv-notempty-message="Specialist title is required and cannot be empty">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <select class="form-control" id="ddlAppointmentType">
+                                        <option value="">Select Speciality</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control form-control-md border shadow-sm " data-val="true" id="FirstName" name="FirstName" placeholder="First name" type="text" value="@Model.SpecialistDetails.FirstName" data-bv-notempty="true" data-bv-notempty-message="First Name is required and cannot be empty">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control form-control-md border shadow-sm " data-val="true" id="LastName" name="LastName" placeholder="Last name" type="text" value="@Model.SpecialistDetails.Surname" data-bv-notempty="true" data-bv-notempty-message="Last Name is required and cannot be empty">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control form-control-md border shadow-sm " data-val="true" id="Email" name="Email" placeholder="Email address" type="text" value="@Model.SpecialistDetails.Email" data-bv-notempty="true" data-bv-notempty-message="Email is required and cannot be empty">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input class="form-control form-control-md border shadow-sm " data-val="true" id="SpecilaistCell" name="SpecilaistCell" placeholder="Cellphone Number" type="text" value="@Model.SpecialistDetails.Cellphone" data-bv-notempty="true" data-bv-notempty-message="Cellphone is required and cannot be empty">
+                                </div>
+                            </div>
+
+                            <div class="form-row d-flex justify-content-sm-end mr-3">
+                                <a class="btn btn-primary text-uppercase" href="#" id="btnUpdateSpecialist">Update</a>
+                            </div>
+
+                            <hr class="ml-5 mr-5" />
+
+                            <h5 class="modal-title details-dividerd mb-3 text-center">Practice Information</h5>
+                            <p>
+                                Below you are the details of the practice(s) you are linked to.
+                            </p>
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-12">
+                                    <table class="table table-bordered med-park-table">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:45%">
+                                                    @if (Model.SpecialistDetails.IsAdmin)
+                                                    {
+                                                        <a class="prac-details" data-target="#practiceDetail" data-toggle="modal" href="#" practice-id="@Model.PracticeDetails.Id">@Model.PracticeDetails.PracticeName</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Model.PracticeDetails.PracticeName
+                                                    }
+                                                </td>
+                                                <td style="width:20%">
+                                                    @Model.PracticeDetails.TelephonePrimary
+                                                </td>
+                                                <td style="width:33%">
+                                                    <a href="mailto:@Model.PracticeDetails.Email" target="_blank">@Model.PracticeDetails.Email</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Appointments Tab -->
+                        <div class="tab-pane fade" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+                            <table class="table table-bordered med-park-table" id="tblSpecialistBookings">
+                                <thead>
+                                    <tr>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Saturday || DateTime.Today.DayOfWeek == DayOfWeek.Sunday) ? "" : "hide")">Sunday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Sunday || DateTime.Today.DayOfWeek == DayOfWeek.Monday) ? "" : "hide")">Monday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Monday || DateTime.Today.DayOfWeek == DayOfWeek.Tuesday) ? "" : "hide")">Tuesday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Tuesday || DateTime.Today.DayOfWeek == DayOfWeek.Wednesday) ? "" : "hide")">Wednesday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Wednesday || DateTime.Today.DayOfWeek == DayOfWeek.Thursday) ? "" : "hide")">Thursday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Thursday || DateTime.Today.DayOfWeek == DayOfWeek.Friday) ? "" : "hide")">Friday</td>
+                                        <td class="width: 50% @((DateTime.Today.DayOfWeek == DayOfWeek.Friday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday) ? "" : "hide")">Saturday</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Orders Tab -->
+                        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+
+                        </div>
+
+                        <!-- Contatc Tab -->
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="appointmentDetail" tabindex="-1" role="dialog" aria-modal="true" data-backdrop="static">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="routeModalTitle">Appointment Detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <div class="team-member appointment-detail">
+                                    <img class="mx-auto rounded-circle" src="~/img/placeholder-avatar.png" alt="">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Appointment Type</label>
+                                        <label class="d-block" id="lblAppType"></label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Medical Scheme</label>
+                                        <label class="d-block" id="lblSchemeName"></label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Scheduled Date</label>
+                                        <label class="d-block" id="lblAppDate"></label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Is Postponement?</label>
+                                        <label class="d-block" id="lblIsPostponed"></label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Notes</label>
+                                        <textarea rows="3" class="form-control form-control-md border shadow-sm " id="txtAppComments" name="txtAppComments" placeholder="Additional details"></textarea>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Practice Name</label>
+                                        <label class="d-block" id="lblPracticeName"></label>
+                                    </div>
+                                </div>
+
+                                <h5 class="modal-title divider-hed mb-3">Patient Detail</h5>
+
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Patient Name</label>
+                                        <label class="d-block" id="lblSpecilaistName"></label>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Patient Email</label>
+                                        <label class="d-block" id="lblSpecialistEmail"></label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label class="font-weight-bold mb-0">Contact Number</label>
+                                        <label class="d-block" id="lblPracticeContactNo"></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="practiceDetail" tabindex="-1" role="dialog" aria-modal="true" data-backdrop="static">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="routeModalTitle">Practice Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center">
+                                <div class="team-member appointment-detail">
+                                    <img class="mx-auto rounded-circle" src="~/img/placeholder-avatar.png" alt="">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <input class="form-control form-control-md border shadow-sm " data-val="true" id="PracName" name="PracName" placeholder="Practice Name" type="text" data-bv-notempty="true" data-bv-notempty-message="Practice Name is required and cannot be empty">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <input class="form-control form-control-md border shadow-sm " data-val="true" id="PracEmail" name="PracEmail" placeholder="Email" type="text" data-bv-notempty="true" data-bv-notempty-message="Practice email is required and cannot be empty">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <input class="form-control form-control-md border shadow-sm " data-val="true" id="PPhone" name="PPhone" placeholder="Primary Contact" type="text" data-bv-notempty="true" data-bv-notempty-message="Primary contact is required and cannot be empty">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <input class="form-control form-control-md border shadow-sm " id="SPhone" name="SPhone" placeholder="Secondary Contact" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <input class="form-control form-control-md border shadow-sm " id="Website" name="Website" placeholder="Website" type="text">
+                                    </div>
+                                </div>
+
+                                <h5 class="modal-title details-dividerd mb-3">Practice Operating Hours</h5>
+
+                                <div class="hours-container">
+
+                                </div>
+                                <div class="update-hours">
+                                    <div class="form-row">
+                                        <div class="form-group col-sm-6 monday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Monday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsMonOpen" name="HrsMonOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 monday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Monday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsMonClose" name="HrsMonClose" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 tuesday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Tuesday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsTueOpen" name="HrsTueOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 tuesday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Tuesday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsTueClose" name="HrsTueClose" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 wednesday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Wednesday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsWedOpen" name="HrsWedOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 wednesday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Wednesday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsWedClose" name="HrsWedClosen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 thursday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Thursday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsThuOpen" name="HrsThuOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 thursday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Thursday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsThuClose" name="HrsThuClose" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 friday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Friday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsFriOpen" name="HrsFriOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 friday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Friday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsFriClose" name="HrsFriClose" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 saturday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Saturday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsSatnOpen" name="HrsSatnOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 saturday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Saturday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsSatClose" name="HrsSatClose" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 sunday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Sunday Open</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsSunOpen" name="HrsSunOpen" type="time">
+                                        </div>
+                                        <div class="form-group col-sm-6 sunday-hours hide">
+                                            <label class="font-weight-bold set-operating-hour">Sunday Close</label>
+                                            <input class="form-control form-control-md border shadow-sm" id="hrsSunClose" name="HrsSunClose" type="time">
+                                        </div>
+                                    </div>
+                                    <div class="form-row d-flex justify-content-sm-end mr-3">
+                                        <a class="btn btn-primary text-uppercase" href="#" id="btnDoneHourUpdate" style="display:none;">Done</a>
+                                    </div>
+                                </div>
+
+                                <div class="form-row d-flex justify-content-sm-end mt-3 mr-3">
+                                    <a class="btn btn-primary text-uppercase" href="#" id="btnSubmitPracticeUpdate">Submit Update</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+</section>
+
+<script type="text/javascript">
+    var specialistId = "@Html.Raw(User.Claims.Where(x => x.Type == "identityid").FirstOrDefault().Value)";
+</script>
+
+<script type="text/javascript" src="~/js/Specialist/profile.js"></script>

@@ -1,0 +1,150 @@
+// Core variables and mixins
+@import "base/variables.scss";
+@import "base/mixins.scss";
+
+// Global CSS
+@import "base/page.scss";
+
+// Components
+@import "components/buttons.scss";
+@import "components/navbar.scss";
+
+// Layout
+@import "layout/masthead.scss";
+@import "layout/services.scss";
+@import "layout/portfolio.scss";
+@import "layout/timeline.scss";
+@import "layout/team.scss";
+@import "layout/contact.scss";
+@import "layout/footer.scss";
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: $primary;
+    background-color: transparent;
+}
+
+.nav-pills .nav-link {
+    background-color: #fff;
+    font-size: 14px;
+    border-radius: 8px;
+    color: #6c757d;
+
+    &:hover {
+        color: $primary;
+    }
+
+    &.active {
+        color: $primary;
+        font-weight: bold;
+        background-color: #fff;
+    }
+}
+
+.tab-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 6px;
+    margin-top: 20px;
+
+    > .tab-pane {
+        display: none;
+    }
+
+    > .active {
+        display: block;
+    }
+
+    > form > .tab-pane {
+        display: none;
+    }
+
+    > form > .active {
+        display: block;
+    }
+}
+
+
+.med-park-table {
+    > thead > tr {
+        background-color: #212529;
+        color:$primary;
+    }
+}
+
+.hide{
+    display:none !important;
+}
+
+
+.modal-content .modal-header {
+    border-bottom: none;
+    padding: 24px;
+    background: linear-gradient(60deg,#404040,#404040);
+    box-shadow: 0 12px 20px -10px rgba(126,130,159,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(126,130,159,.2);
+}
+
+.modal-header {
+    background: #212529 !important;
+    color: $primary;
+}
+
+.modal .modal-header .close {
+    color: #fff;
+    font-size: 26px;
+}
+
+.form-control:focus {
+    box-shadow:none !important;
+}
+
+.booked-app{
+    cursor:pointer;
+}
+
+.appointment-detail {
+
+    > img {
+        width: 180px !important;
+        height: 180px !important;
+    }
+}
+
+.loader {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Phi_fenomeni.gif/50px-Phi_fenomeni.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+
+.divider-hed{
+    color:$primary;
+}
+
+.details-divider {
+    color: #212529;
+}
+
+.modal-xl {
+    max-width: 65% !important;
+}
+
+.operating-hour {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: #0056b3;
+    font-size: 10px;
+
+    &:hover, &:focus {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        color: #0056b3;
+        font-size: 10px;
+    }
+}
+
+.set-operating-hour{
+    font-size:11px !important;
+}
